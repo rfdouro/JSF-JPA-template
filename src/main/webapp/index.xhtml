@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+ <h:head>
+  <title>Facelet Title</title>
+ </h:head>
+ <h:body>
+  <h:form id="formInsere" >
+   <label for="nome">Nome:</label>
+   <h:inputText class="form-control" value="${PessoasBean.pessoa.nome}" id="nome"/>
+   <h:commandButton class="btn btn-primary" value="Salvar">
+    <f:ajax execute="@form" render=":formLista" listener="${PessoasBean.adicionaPessoa()}" />
+   </h:commandButton>
+  </h:form>
+
+  <h:form id="formLista">
+   <h:dataTable id="tbPessoas" 
+                value="${PessoasBean.pessoas}" var="p" columnClasses="perc20,perc60,perc20">
+    <h:column>
+     <f:facet name="header">
+      ID
+     </f:facet>
+     ${p.id}
+    </h:column>
+    <h:column>
+     <f:facet name="header">
+      Nome
+     </f:facet>
+     ${p.nome}
+    </h:column>
+    <h:column>
+     <f:facet name="header">
+      Ações
+     </f:facet>
+     <h:commandButton value="Excluir">
+      <f:ajax execute="@this" render=":formLista" listener="${PessoasBean.excluiPessoa(p.id)}" />
+     </h:commandButton>
+    </h:column>
+   </h:dataTable>
+  </h:form>
+ </h:body>
+</html>
+
